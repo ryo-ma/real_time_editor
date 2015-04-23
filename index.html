@@ -1,0 +1,31 @@
+<html>                                                                                                                  
+<head>
+  <title>RealTimeChat</title>
+</head>
+<body>
+  <h1>RealTimeChat</h1>
+  <div>
+    <input name="send_input" id="send_input" />
+    <input type="button" value="push" onclick="send_data()" />
+  </div>
+  <h2>Message</h2>
+  <div>
+    <textarea id="view"></textarea>
+  </div>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+  <script type="text/javascript">
+var ws = new WebSocket("ws://127.0.0.1:8000/echo");
+ws.onopen = function(){
+  console.log("start")
+};
+ws.onmessage = function(e) {
+  $("#view").html($("#view").val() + e.data + "\n");
+  console.log("message")
+};
+function send_data() {
+  ws.send($("#send_input").val());
+  console.log("push")
+};
+</script>
+</body>
+</html>
